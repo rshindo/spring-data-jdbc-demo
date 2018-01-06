@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class DataJdbcDemoApplicationTests {
+public class SpringDataJdbcDemoApplicationTests {
 
     @Autowired
     EmployeeRepository repo;

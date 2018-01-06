@@ -17,10 +17,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @SpringBootApplication
 @EnableJdbcRepositories
-public class DataJdbcDemoApplication {
+public class SpringDataJdbcDemoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DataJdbcDemoApplication.class, args);
+		SpringApplication.run(SpringDataJdbcDemoApplication.class, args);
 	}
 
 	@Autowired
