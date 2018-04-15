@@ -2,10 +2,10 @@ package com.example.demo;
 
 import java.util.Arrays;
 
-import org.springframework.data.jdbc.mapping.model.DefaultNamingStrategy;
 import org.springframework.data.jdbc.mapping.model.JdbcPersistentProperty;
+import org.springframework.data.jdbc.mapping.model.NamingStrategy;
 
-public class CustomNamingStrategy extends DefaultNamingStrategy {
+public class CustomNamingStrategy implements NamingStrategy {
 
     @Override
     public String getColumnName(JdbcPersistentProperty property) {
@@ -15,7 +15,8 @@ public class CustomNamingStrategy extends DefaultNamingStrategy {
 
     @Override
     public String getTableName(Class<?> type) {
-        return super.getTableName(type);
+        String className = type.getSimpleName();
+        return camelToSnake(className);
     }
 
     public String camelToSnake(String original) {
