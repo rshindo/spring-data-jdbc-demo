@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -60,5 +61,19 @@ public class SpringDataJdbcDemoApplicationTests {
 
         Optional<Employee> deleted = repo.findById(employeeNumber);
         assertTrue(!deleted.isPresent());
+    }
+
+    @Test
+    public void testFindByHiredAtRange() {
+        LocalDate since = LocalDate.of(2015, 4, 1);
+        LocalDate until = LocalDate.now();
+
+        List<Employee> result = repo.findByHiredAtRange(since, until);
+
+        assertEquals(1, result.size());
+        Employee employee = result.get(0);
+        assertAll("Mya-mori",
+                () -> assertEquals(employee.getFirstname(), "Aoi"),
+                () -> assertEquals(employee.getLastname(), "Miyamori"));
     }
 }
