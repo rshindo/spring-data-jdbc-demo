@@ -50,15 +50,15 @@ public class OrderRepositoryTest {
         System.out.println(all);
     }
 
-@Test
-void test() {
-    PurchaseOrder purchaseOrder = PurchaseOrder.of("Tokyo");
-    purchaseOrder.addItem(4, "Captain Future Comet Lego set");
-    purchaseOrder.addItem(2, "Cute blue angler fish plush toy");
-    orderRepository.save(purchaseOrder);
+    @Test
+    void test() {
+        PurchaseOrder purchaseOrder = PurchaseOrder.of("Tokyo");
+        purchaseOrder.addItem(4, "Captain Future Comet Lego set");
+        purchaseOrder.addItem(2, "Cute blue angler fish plush toy");
+        orderRepository.save(purchaseOrder);
 
-    Iterable<PurchaseOrder> result = orderRepository.findAll(); //throw MappingException !!
-    result.forEach(System.out::println);
-}
+        Iterable<PurchaseOrder> result = orderRepository.findAll(); //throw MappingException !!
+        result.forEach(System.out::println);
+    }
 
 }

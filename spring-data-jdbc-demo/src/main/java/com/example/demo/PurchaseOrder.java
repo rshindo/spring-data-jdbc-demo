@@ -4,6 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Reference;
+import org.springframework.data.relational.core.mapping.Column;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,16 +18,18 @@ public final class PurchaseOrder {
     @Id
     private Long id;
     private String shippingAddress;
-    private Set<OrderItem> items;
+    @Column(keyColumn = "purchase_order")
+    private Set<OrderItem> items = new HashSet<>();
 
-    private PurchaseOrder(Long id, String shippingAddress, Set<OrderItem> items) {
+    private PurchaseOrder(Long id, String shippingAddress) {
         this.id = id;
         this.shippingAddress = shippingAddress;
-        this.items = items;
+//        this.items = items;
     }
 
     public static PurchaseOrder of(String shippingAddress) {
-        return new PurchaseOrder(null, shippingAddress, new HashSet<>());
+//        return new PurchaseOrder(null, shippingAddress, new HashSet<>());
+        return new PurchaseOrder(null, shippingAddress);
     }
 
     void addItem(int quantity, String product) {
@@ -33,7 +37,7 @@ public final class PurchaseOrder {
     }
 
     public PurchaseOrder withId(Long id) {
-        return new PurchaseOrder(id, shippingAddress, items);
+        return new PurchaseOrder(id, shippingAddress);
     }
 
 }

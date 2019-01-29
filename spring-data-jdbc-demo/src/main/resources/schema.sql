@@ -18,7 +18,7 @@ create table purchase_order (
 );
 
 create table order_item (
-  items_id bigint primary key auto_increment,
+  id bigint primary key auto_increment,
   purchase_order bigint NOT NULL,
   quantity int NOT NULL,
   product varchar NOT NULL
