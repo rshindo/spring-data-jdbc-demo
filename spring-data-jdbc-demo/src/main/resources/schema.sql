@@ -1,10 +1,7 @@
 create table employee (
-    employee_number bigint primary key auto_increment,
-    firstname varchar NOT NULL,
-    lastname varchar NOT NULL,
-    age int NOT NULL,
-    hired_at date,
-    department bigint
+    id bigint primary key auto_increment,
+    first_name varchar NOT NULL,
+    last_name varchar NOT NULL,
 );
 
 create table department (
@@ -14,12 +11,12 @@ create table department (
 
 create table purchase_order (
   id bigint primary key auto_increment,
-  shipping_address varchar NOT NULL
+  order_datetime datetime NOT NULL
 );
 
-create table order_item (
+create table order_detail (
   id bigint primary key auto_increment,
   purchase_order bigint NOT NULL,
   quantity int NOT NULL,
-  product varchar NOT NULL
+  item varchar NOT NULL
 );

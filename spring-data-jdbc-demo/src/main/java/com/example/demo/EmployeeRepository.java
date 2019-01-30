@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
-    @Query("select * from employee where :since <= hired_at and hired_at <= :until")
-    List<Employee> findByHiredAtRange(@Param("since") LocalDate since, @Param("until") LocalDate until);
-
-    List<Employee> findByAge(int age);
+    @Query("SELECT * FROM employee WHERE firstName = :firstName")
+    List<Employee> findByFirstName(@Param("firstName") String firstName);
 }

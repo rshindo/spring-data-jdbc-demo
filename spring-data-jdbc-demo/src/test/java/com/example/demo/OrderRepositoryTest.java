@@ -3,8 +3,10 @@ package com.example.demo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,7 +26,7 @@ public class OrderRepositoryTest {
 
     @Test
     void createUpdateDeleteOrder() {
-        PurchaseOrder purchaseOrder = PurchaseOrder.of("Sendai");
+        PurchaseOrder purchaseOrder = PurchaseOrder.of(LocalDateTime.now());
         purchaseOrder.addItem(4, "Captain Future Comet Lego set");
         purchaseOrder.addItem(2, "Cute blue angler fish plush toy");
 
@@ -37,7 +39,7 @@ public class OrderRepositoryTest {
 
     @Test
     void createUpdateFindAll() {
-        PurchaseOrder purchaseOrder = PurchaseOrder.of("Tokyo");
+        PurchaseOrder purchaseOrder = PurchaseOrder.of(LocalDateTime.now());
         purchaseOrder.addItem(4, "Captain Future Comet Lego set");
         purchaseOrder.addItem(2, "Cute blue angler fish plush toy");
 
@@ -52,13 +54,35 @@ public class OrderRepositoryTest {
 
     @Test
     void test() {
-        PurchaseOrder purchaseOrder = PurchaseOrder.of("Tokyo");
+        PurchaseOrder purchaseOrder = PurchaseOrder.of(LocalDateTime.now());
         purchaseOrder.addItem(4, "Captain Future Comet Lego set");
         purchaseOrder.addItem(2, "Cute blue angler fish plush toy");
         orderRepository.save(purchaseOrder);
 
         Iterable<PurchaseOrder> result = orderRepository.findAll(); //throw MappingException !!
         result.forEach(System.out::println);
+    }
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    @Test
+    void test2() {
+        PurchaseOrder order = PurchaseOrder.of(LocalDateTime.now());
+        order.addItem(10, "Java本格入門");
+        order = orderRepository.save(order);
+        System.out.println(jdbcTemplate.queryForList("SELECT * FROM purchase_order"));
+        System.out.println(jdbcTemplate.queryForList("SELECT * FROM order_detail"));
+
+
+        order.addItem(20, "はじめてのSpring Boot");
+        order = orderRepository.save(order);
+        System.out.println(jdbcTemplate.queryForList("SELECT * FROM purchase_order"));
+        System.out.println(jdbcTemplate.queryForList("SELECT * FROM order_detail"));
+
+        orderRepository.delete(order);
+        System.out.println(jdbcTemplate.queryForList("SELECT * FROM purchase_order"));
+        System.out.println(jdbcTemplate.queryForList("SELECT * FROM order_detail"));
     }
 
 }

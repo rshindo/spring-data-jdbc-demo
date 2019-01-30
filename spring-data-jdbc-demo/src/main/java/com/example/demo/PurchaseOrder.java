@@ -4,9 +4,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Reference;
-import org.springframework.data.relational.core.mapping.Column;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,28 +15,25 @@ import java.util.Set;
 public final class PurchaseOrder {
 
     @Id
-    private Long id;
-    private String shippingAddress;
-    @Column(keyColumn = "purchase_order")
-    private Set<OrderItem> items = new HashSet<>();
+    private final Long id;
+    private final LocalDateTime orderDatetime;
+    private final Set<OrderDetail> items = new HashSet<>();
 
-    private PurchaseOrder(Long id, String shippingAddress) {
+    public static PurchaseOrder of(LocalDateTime orderDatetime) {
+        return new PurchaseOrder(null, orderDatetime);
+    }
+
+    private PurchaseOrder(Long id, LocalDateTime orderDatetime) {
         this.id = id;
-        this.shippingAddress = shippingAddress;
-//        this.items = items;
+        this.orderDatetime = orderDatetime;
     }
 
-    public static PurchaseOrder of(String shippingAddress) {
-//        return new PurchaseOrder(null, shippingAddress, new HashSet<>());
-        return new PurchaseOrder(null, shippingAddress);
-    }
-
-    void addItem(int quantity, String product) {
-        items.add(OrderItem.of(quantity, product));
+    void addItem(int quantity, String item) {
+        items.add(OrderDetail.of(quantity, item));
     }
 
     public PurchaseOrder withId(Long id) {
-        return new PurchaseOrder(id, shippingAddress);
+        return new PurchaseOrder(id, orderDatetime);
     }
 
 }

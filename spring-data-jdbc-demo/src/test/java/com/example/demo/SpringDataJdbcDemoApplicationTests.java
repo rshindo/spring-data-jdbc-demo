@@ -29,7 +29,7 @@ public class SpringDataJdbcDemoApplicationTests {
 
     @Test
     public void test1() {
-        Employee employee = Employee.of("John", "Do", 30, LocalDate.of(2012, 4, 1));
+        Employee employee = Employee.of("John", "Do");
 //        employee.setFirstname("John");
 //        employee.setLastname("Do");
 //        employee.setAge(30);
@@ -37,26 +37,24 @@ public class SpringDataJdbcDemoApplicationTests {
 
         // Insert
         employee = employeeRepository.save(employee);
-        Long employeeNumber = employee.getEmployeeNumber();
+        Long employeeNumber = employee.getId();
 
         Optional<Employee> insertedOpt = employeeRepository.findById(employeeNumber);
         assertTrue(insertedOpt.isPresent());
         Employee inserted = insertedOpt.get();
         assertAll("insert",
-                () -> assertEquals(inserted.getEmployeeNumber(), employeeNumber),
-                () -> assertEquals(inserted.getFirstname(), "John"),
-                () -> assertEquals(inserted.getLastname(), "Do"),
-                () -> assertEquals(inserted.getAge(), Integer.valueOf(30)),
-                () -> assertEquals(inserted.getHiredAt(), LocalDate.of(2012, 4, 1)));
+                () -> assertEquals(inserted.getId(), employeeNumber),
+                () -> assertEquals(inserted.getFirstName(), "John"),
+                () -> assertEquals(inserted.getLastName(), "Do"));
 
         // Update
-        Employee newEmployee = employee.withAge(31);
+        Employee newEmployee = employee.withFirstName("Joe");
         employeeRepository.save(newEmployee);
 
         Optional<Employee> updatedOpt = employeeRepository.findById(employeeNumber);
         assertTrue(updatedOpt.isPresent());
         Employee updated = updatedOpt.get();
-        assertEquals(updated.getAge(), Integer.valueOf(31));
+        assertEquals(updated.getFirstName(), "Joe");
 
         // Delete
         employeeRepository.delete(employee);
@@ -65,25 +63,20 @@ public class SpringDataJdbcDemoApplicationTests {
         assertTrue(!deleted.isPresent());
     }
 
-    @Test
-    public void testFindByHiredAtRange() {
-        LocalDate since = LocalDate.of(2015, 4, 1);
-        LocalDate until = LocalDate.now();
-
-        List<Employee> result = employeeRepository.findByHiredAtRange(since, until);
-
-        assertEquals(1, result.size());
-        Employee employee = result.get(0);
-        System.out.println(employee);
-        assertAll("Mya-mori",
-                () -> assertEquals(employee.getFirstname(), "Aoi"),
-                () -> assertEquals(employee.getLastname(), "Miyamori"));
-    }
-
-    private void insert(String firstname, String lastname, int age, LocalDate hiredAt) {
-        Employee employee = Employee.of(firstname, lastname, age, hiredAt);
-        employeeRepository.save(employee);
-    }
+//    @Test
+//    public void testFindByHiredAtRange() {
+//        LocalDate since = LocalDate.of(2015, 4, 1);
+//        LocalDate until = LocalDate.now();
+//
+//        List<Employee> result = employeeRepository.findByHiredAtRange(since, until);
+//
+//        assertEquals(1, result.size());
+//        Employee employee = result.get(0);
+//        System.out.println(employee);
+//        assertAll("Mya-mori",
+//                () -> assertEquals(employee.getFirstName(), "Aoi"),
+//                () -> assertEquals(employee.getLastName(), "Miyamori"));
+//    }
 
     @Test
     void testDepartmentRepository() {
@@ -93,7 +86,7 @@ public class SpringDataJdbcDemoApplicationTests {
             System.out.println(department);
             Set<Employee> employees = department.getEmployees();
             assertEquals(1, employees.size());
-            employees.forEach(employee -> assertEquals("Miyamori", employee.getLastname()));
+            employees.forEach(employee -> assertEquals("Miyamori", employee.getLastName()));
         }, () -> fail("department not found."));
     }
 
