@@ -74,9 +74,16 @@ public class OrderRepositoryTest {
         System.out.println(jdbcTemplate.queryForList("SELECT * FROM purchase_order"));
         System.out.println(jdbcTemplate.queryForList("SELECT * FROM order_detail"));
 
+        for (PurchaseOrder purchaseOrder : orderRepository.findAll()) {
+            System.out.println(purchaseOrder);
+        }
+
 
         order.addItem(20, "はじめてのSpring Boot");
         order = orderRepository.save(order);
+        for (PurchaseOrder purchaseOrder : orderRepository.findAll()) {
+            System.out.println(purchaseOrder);
+        }
         System.out.println(jdbcTemplate.queryForList("SELECT * FROM purchase_order"));
         System.out.println(jdbcTemplate.queryForList("SELECT * FROM order_detail"));
 

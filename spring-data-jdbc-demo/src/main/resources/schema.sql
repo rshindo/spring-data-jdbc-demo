@@ -5,8 +5,14 @@ create table employee (
 );
 
 create table department (
-    department_id bigint primary key auto_increment,
+    id bigint primary key auto_increment,
     name varchar NOT NULL
+);
+
+create table department_employee (
+    department bigint NOT NULL,
+    employee bigint NOT NULL,
+    primary key(department, employee)
 );
 
 create table purchase_order (
@@ -19,4 +25,21 @@ create table order_detail (
   purchase_order bigint NOT NULL,
   quantity int NOT NULL,
   item varchar NOT NULL
+);
+
+
+create table book (
+  id int primary key auto_increment,
+  title varchar NOT NULL
+);
+
+create table author (
+  id int primary key auto_increment,
+  name varchar NOT NULL
+);
+
+create table book_author (
+  book int NOT NULL,
+  author int NOT NULL,
+  primary key (book, author)
 );
