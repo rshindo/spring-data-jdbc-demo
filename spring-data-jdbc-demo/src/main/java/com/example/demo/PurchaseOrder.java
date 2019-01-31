@@ -17,7 +17,7 @@ public final class PurchaseOrder {
     @Id
     private final Long id;
     private final LocalDateTime orderDatetime;
-    private final Set<OrderDetail> items = new HashSet<>();
+    private Set<OrderDetail> items = new HashSet<>();
 
     public static PurchaseOrder of(LocalDateTime orderDatetime) {
         return new PurchaseOrder(null, orderDatetime);

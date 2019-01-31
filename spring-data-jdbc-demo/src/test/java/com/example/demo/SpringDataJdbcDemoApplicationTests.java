@@ -78,17 +78,17 @@ public class SpringDataJdbcDemoApplicationTests {
 //                () -> assertEquals(employee.getLastName(), "Miyamori"));
 //    }
 
-    @Test
-    void testDepartmentRepository() {
-        Optional<Department> maybeDepartment = departmentRepository.findById(1L);
-        assertTrue(maybeDepartment.isPresent());
-        maybeDepartment.ifPresentOrElse(department -> {
-            System.out.println(department);
-            Set<Employee> employees = department.getEmployees();
-            assertEquals(1, employees.size());
-            employees.forEach(employee -> assertEquals("Miyamori", employee.getLastName()));
-        }, () -> fail("department not found."));
-    }
+//    @Test
+//    void testDepartmentRepository() {
+//        Optional<Department> maybeDepartment = departmentRepository.findById(1L);
+//        assertTrue(maybeDepartment.isPresent());
+//        maybeDepartment.ifPresentOrElse(department -> {
+//            System.out.println(department);
+//            Set<Employee> employees = department.getEmployees();
+//            assertEquals(1, employees.size());
+//            employees.forEach(employee -> assertEquals("Miyamori", employee.getLastName()));
+//        }, () -> fail("department not found."));
+//    }
 
     @Test
     void testDepartmentRepository_deleteAll() {

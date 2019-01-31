@@ -29,6 +29,10 @@ public final class Employee {
         return new Employee(id, firstName, lastName);
     }
 
+    public Employee withDepartment(Department department) {
+        return new Employee(id, firstName, lastName);
+    }
+
     public Employee withFirstName(String firstName) {
         return new Employee(id, firstName, lastName);
     }
@@ -44,5 +48,4 @@ public final class Employee {
     public String getLastName() {
         return lastName;
     }
-
 }
