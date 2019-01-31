@@ -92,4 +92,6 @@ public class OrderRepositoryTest {
         System.out.println(jdbcTemplate.queryForList("SELECT * FROM order_detail"));
     }
 
+
+
 }

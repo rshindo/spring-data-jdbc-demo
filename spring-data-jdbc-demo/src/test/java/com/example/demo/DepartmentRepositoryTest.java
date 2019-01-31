@@ -77,4 +77,13 @@ public class DepartmentRepositoryTest {
         assertEquals(1, authors.count());
     }
 
+    @Test
+    void testFindByFirstNameLike() {
+        Employee employee1 = Employee.of("Freddie", "Mercury");
+        Employee employee2 = Employee.of("Brian", "May");
+        employeeRepository.saveAll(List.of(employee1, employee2));
+
+        System.out.println(employeeRepository.findByFirstNameLike("F"));
+    }
+
 }
