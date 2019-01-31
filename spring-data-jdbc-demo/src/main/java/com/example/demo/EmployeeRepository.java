@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface EmployeeRepository extends CrudRepository<Employee, Long> {
+public interface EmployeeRepository extends CrudRepository<Employee, Long>, EmployeeRepositoryCustom {
 
     @Query("SELECT * FROM employee WHERE firstName = :firstName")
     List<Employee> findByFirstName(@Param("firstName") String firstName);
